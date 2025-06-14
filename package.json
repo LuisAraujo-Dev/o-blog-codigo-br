@@ -1,5 +1,5 @@
 {
-  "name": "o-blog-codigo-br",
+  "name": "blog",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,8 +10,7 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
-    "clx": "^1.0.0",
-    "next": "15.3.3",
+    "next": "15.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
@@ -22,8 +21,9 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.3.3",
+    "eslint-config-next": "15.3.0",
     "tailwindcss": "^4",
+    "tsx": "^4.19.3",
     "typescript": "^5"
   }
 }
