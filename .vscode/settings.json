@@ -23,6 +23,11 @@
     "source.fixAll.eslint": "explicit"
   },
 
+
+  "tailwindCSS.experimental.classRegex": [
+    ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
+
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
