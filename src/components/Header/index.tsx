@@ -1,6 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
+import Link from 'next/link';
 
 export function Header() {
   console.log('HEADER');
@@ -15,7 +16,7 @@ export function Header() {
           'lg:text-7xl/normal lg:py-12',
         )}
       >
-        <a href='#'>Código &lt;br&gt;</a>
+        <Link href='#'>Código &lt;br&gt;</Link>
       </h1>
     </header>
   );
