@@ -2,6 +2,7 @@ import { Container } from '@/components/Container';
 import { Header } from '@/components/Header';
 import { PostsList } from '@/components/PostsList';
 import { SpinLoader } from '@/components/SpinLoader';
+import clsx from 'clsx';
 import Image from 'next/image';
 
 import Link from 'next/link';
@@ -10,14 +11,31 @@ import { Suspense } from 'react';
 export default async function HomePage() {
   return (
     <Container>
-     <Header/>
+      <Header />
 
-     <section className=''>
-      <Link href='#'>
-      <Image src='/images/bryen_0.png' width={1200} height={729} alt='titulo do texto'/>
-      </Link>
-      <div></div>
-     </section>
+      <section
+        className={clsx(
+          'grid grid-cols-1 gap-8 mb-16',
+          'sm:grid-cols-2',
+          'group',
+        )}
+      >
+        <Link className='w-full h-full overflow-hidden rounded-xl ' href='#'>
+          <Image
+            className='group-hover:scale-105 transition'
+            src='/images/bryen_0.png'
+            width={1200}
+            height={729}
+            alt='titulo do texto'
+          />
+        </Link>
+        <div>
+          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae, eaque!
+          Nulla, illum iusto. Eum incidunt voluptas alias aperiam ratione velit
+          consectetur voluptatum, excepturi laboriosam necessitatibus voluptatem
+          voluptatibus. Nostrum, tempore eligendi.
+        </div>
+      </section>
       <Suspense fallback={<SpinLoader />}>
         <PostsList></PostsList>
       </Suspense>
