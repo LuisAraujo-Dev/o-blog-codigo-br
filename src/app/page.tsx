@@ -22,7 +22,7 @@ export default async function HomePage() {
       >
         <Link className='w-full h-full overflow-hidden rounded-xl ' href='#'>
           <Image
-            className='group-hover:scale-105 transition'
+            className='w-full h-full object-cover object-center group-hover:scale-105 transition'
             src='/images/bryen_0.png'
             width={1200}
             height={729}
@@ -30,18 +30,26 @@ export default async function HomePage() {
             priority
           />
         </Link>
-        <div>
-          <time className={('text-slate-600 text-sm')} dateTime="2025-04-20">20/04/2025 10:00</time>
+        <div className='flex flex-col gap-4 sm:justify-center'>
+          <time
+            className='text-slate-600 block text-sm/tight'
+            dateTime='2025-04-20'
+          >
+            20/04/2025 10:00
+          </time>
 
-          <h1>
-            <Link href='#'>Lorem, ipsum dolor sit amet consectetur adipisicing elit</Link>
+          <h1 className='text-2xl/tight font-extrabold sm:text-4xl'>
+            <Link href='#'>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit
+            </Link>
           </h1>
 
           <p>
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae, eaque!
-          Nulla, illum iusto. Eum incidunt voluptas alias aperiam ratione velit
-          consectetur voluptatum, excepturi laboriosam necessitatibus voluptatem
-          voluptatibus. Nostrum, tempore eligendi.</p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae,
+            eaque! Nulla, illum iusto. Eum incidunt voluptas alias aperiam
+            ratione velit consectetur voluptatum, excepturi laboriosam
+            necessitatibus voluptatem voluptatibus. Nostrum, tempore eligendi.
+          </p>
         </div>
       </section>
       <Suspense fallback={<SpinLoader />}>
