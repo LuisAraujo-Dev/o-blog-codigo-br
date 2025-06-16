@@ -27,13 +27,21 @@ export default async function HomePage() {
             width={1200}
             height={729}
             alt='titulo do texto'
+            priority
           />
         </Link>
         <div>
+          <time className={('text-slate-600 text-sm')} dateTime="2025-04-20">20/04/2025 10:00</time>
+
+          <h1>
+            <Link href='#'>Lorem, ipsum dolor sit amet consectetur adipisicing elit</Link>
+          </h1>
+
+          <p>
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae, eaque!
           Nulla, illum iusto. Eum incidunt voluptas alias aperiam ratione velit
           consectetur voluptatum, excepturi laboriosam necessitatibus voluptatem
-          voluptatibus. Nostrum, tempore eligendi.
+          voluptatibus. Nostrum, tempore eligendi.</p>
         </div>
       </section>
       <Suspense fallback={<SpinLoader />}>
