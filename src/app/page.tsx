@@ -1,9 +1,9 @@
 import { Container } from '@/components/Container';
 import { Header } from '@/components/Header';
+import { PostCouverImage } from '@/components/PostCouverImage';
 import { PostHeading } from '@/components/PostHeading';
 import { PostsList } from '@/components/PostsList';
 import { SpinLoader } from '@/components/SpinLoader';
-import clsx from 'clsx';
 import { Suspense } from 'react';
 
 export default async function HomePage() {
@@ -12,32 +12,32 @@ export default async function HomePage() {
       <Header />
 
       <section
-        className={clsx(
-          'grid grid-cols-1 gap-8 mb-16',
-          'sm:grid-cols-2',
-          'group',
-        )}
-      >
+        className={'grid grid-cols-1 gap-8 mb-16 sm:grid-cols-2 group'}>
+        <PostCouverImage
+                      linkProps={{
+                        href: '/pos',
+                      }}
+                      imageProps={{
+                        width: 1200,
+                        height: 720,
+                        src: '/images/bryen_0.png',
+                        alt: 'Alt da imagem',
+                        priority: true,
+                      }}
+                    />
 
-        <div className='flex flex-col gap-4 sm:justify-center'>
-          <time
-            className='text-slate-600 block text-sm/tight'
-            dateTime='2025-04-20'
-          >
-            20/04/2025 10:00
-          </time>
-          <PostHeading as={'h2'} url={''}>
-            Título do Post
-          </PostHeading>
-
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae,
-            eaque! Nulla, illum iusto. Eum incidunt voluptas alias aperiam
-            ratione velit consectetur voluptatum, excepturi laboriosam
-            necessitatibus voluptatem voluptatibus. Nostrum, tempore eligendi.
-          </p>
-        </div>
+                    <div className='flex flex-col gap-4 sm:justify-center'>
+                      <time
+                        className='text-slate-600 block text-sm/tight'
+                        dateTime={'2025-04-20'}
+                      >
+                        2025-04-20
+                      </time></div>
+                      <PostHeading as={'h2'} url='#'>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      </PostHeading>
       </section>
+
       <Suspense fallback={<SpinLoader />}>
         <PostsList></PostsList>
       </Suspense>
