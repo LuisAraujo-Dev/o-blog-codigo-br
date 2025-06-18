@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import Link from 'next/link';
 
 type PostHeadingProps = {
@@ -7,8 +8,15 @@ type PostHeadingProps = {
 };
 
 export function PostHeading({ children, url, as: Tag = "h2" }: PostHeadingProps) {
+  const HeadingClassesMap = {
+    h1: 'text-2xl/tight sm:text-4xl',
+    h2: 'text-2xl/tight sm:text-4xl'
+  };
+
+  const commonClasses = 'font-extrabold';
+
   return (
-    <Tag className='text-2xl/tight font-extrabold sm:text-4xl'>
+    <Tag className={clsx(HeadingClassesMap[Tag], commonClasses)}>
       <Link href={url}>{children}</Link>
     </Tag>
   );
