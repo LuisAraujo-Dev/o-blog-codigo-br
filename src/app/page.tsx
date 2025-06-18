@@ -1,12 +1,10 @@
 import { Container } from '@/components/Container';
 import { Header } from '@/components/Header';
+import { PostCouverImage } from '@/components/PostCouverImage';
 import { PostHeading } from '@/components/PostHeading';
 import { PostsList } from '@/components/PostsList';
 import { SpinLoader } from '@/components/SpinLoader';
 import clsx from 'clsx';
-import Image from 'next/image';
-
-import Link from 'next/link';
 import { Suspense } from 'react';
 
 export default async function HomePage() {
@@ -21,16 +19,19 @@ export default async function HomePage() {
           'group',
         )}
       >
-        <Link className='w-full h-full overflow-hidden rounded-xl ' href='#'>
-          <Image
-            className='w-full h-full object-cover object-center group-hover:scale-105 transition'
-            src='/images/bryen_0.png'
-            width={1200}
-            height={729}
-            alt='titulo do texto'
-            priority
-          />
-        </Link>
+        <PostCouverImage
+          linkProps={{
+            href: '/post/asdasda',
+          }}
+          imageProps={{
+            width: 1200,
+            height: 720,
+            src: '/images/bryen_0.png',
+            alt: 'título da imagem',
+            priority: true,
+          }}
+        />
+
         <div className='flex flex-col gap-4 sm:justify-center'>
           <time
             className='text-slate-600 block text-sm/tight'
@@ -38,7 +39,9 @@ export default async function HomePage() {
           >
             20/04/2025 10:00
           </time>
-          <PostHeading as={"h2"} url={''}>Título do Post</PostHeading>
+          <PostHeading as={'h2'} url={''}>
+            Título do Post
+          </PostHeading>
 
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae,
