@@ -1,6 +1,5 @@
 import { Container } from '@/components/Container';
 import { Header } from '@/components/Header';
-import { PostCouverImage } from '@/components/PostCouverImage';
 import { PostHeading } from '@/components/PostHeading';
 import { PostsList } from '@/components/PostsList';
 import { SpinLoader } from '@/components/SpinLoader';
@@ -19,18 +18,6 @@ export default async function HomePage() {
           'group',
         )}
       >
-        <PostCouverImage
-          linkProps={{
-            href: '/post/asdasda',
-          }}
-          imageProps={{
-            width: 1200,
-            height: 720,
-            src: '/images/bryen_0.png',
-            alt: 'título da imagem',
-            priority: true,
-          }}
-        />
 
         <div className='flex flex-col gap-4 sm:justify-center'>
           <time
