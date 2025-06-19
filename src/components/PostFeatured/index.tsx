@@ -27,10 +27,17 @@ export function PostFeatured() {
         >
           2025-04-20
         </time>
+
+        <PostHeading as={'h1'} url={postLink}>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </PostHeading>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. In velit
+          dolorem est dolor porro, doloribus neque, quidem mollitia doloremque,
+          ad perspiciatis fugiat. Rerum, vel ex? Impedit ullam harum blanditiis
+          mollitia?
+        </p>
       </div>
-      <PostHeading as={'h1'} url={postLink}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      </PostHeading>
     </section>
   );
 }
