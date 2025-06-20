@@ -1,7 +1,9 @@
 import { PostCouverImage } from '../PostCouverImage';
-import { PostHeading } from '../PostHeading';
+import { PostSummary } from '../PostSummary';
 
 export function PostFeatured() {
+
+
   const slug = 'qualquer';
   const postLink = `/post/${slug}`;
 
@@ -20,24 +22,8 @@ export function PostFeatured() {
         }}
       />
 
-      <div className='flex flex-col gap-4 sm:justify-center'>
-        <time
-          className='text-slate-600 block text-sm/tight'
-          dateTime={'2025-04-20'}
-        >
-          2025-04-20
-        </time>
+        <PostSummary postHeading='h1' postLink={postLink} createdAt={'00/00/0000 às 00h00'} title={'title post'} excerpt={'sdaad asdasdsa sdadads asdadsa '} />
 
-        <PostHeading as={'h1'} url={postLink}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </PostHeading>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. In velit
-          dolorem est dolor porro, doloribus neque, quidem mollitia doloremque,
-          ad perspiciatis fugiat. Rerum, vel ex? Impedit ullam harum blanditiis
-          mollitia?
-        </p>
-      </div>
     </section>
   );
 }
