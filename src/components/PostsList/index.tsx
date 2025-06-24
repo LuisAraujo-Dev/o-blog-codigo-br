@@ -1,6 +1,6 @@
 import { postRepository } from '@/repositories/post';
-import { PostCouverImage } from '../PostCouverImage';
 import { PostSummary } from '../PostSummary';
+import { PostCoverImage } from '../PostCoverImage';
 
 export async function PostsList() {
   const posts = await postRepository.findAll();
@@ -11,8 +11,8 @@ export async function PostsList() {
         const postLink = `/post/${post.slug}`;
 
         return (
-          <div className='flex flex-col group gap-4 ' key={post.id}>
-            <PostCouverImage
+          <div className='flex flex-col gap-4 group' key={post.id}>
+            <PostCoverImage
               linkProps={{
                 href: postLink,
               }}
@@ -25,11 +25,11 @@ export async function PostsList() {
             />
 
             <PostSummary
-              title={post.title}
-              excerpt={post.excerpt}
-              createdAt={post.createdAt}
               postLink={postLink}
               postHeading='h2'
+              createdAt={post.createdAt}
+              excerpt={post.excerpt}
+              title={post.title}
             />
           </div>
         );

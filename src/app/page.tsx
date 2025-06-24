@@ -15,7 +15,7 @@ export default async function HomePage() {
       </Suspense>
 
       <Suspense fallback={<SpinLoader />}>
-        <PostsList></PostsList>
+        <PostsList />
       </Suspense>
 
       <footer>

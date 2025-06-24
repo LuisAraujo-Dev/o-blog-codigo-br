@@ -1,4 +1,4 @@
-import { PostCouverImage } from '../PostCouverImage';
+import { PostCoverImage } from '../PostCoverImage';
 import { PostSummary } from '../PostSummary';
 
 export function PostFeatured() {
@@ -9,7 +9,7 @@ export function PostFeatured() {
 
   return (
     <section className={'grid grid-cols-1 gap-8 mb-16 sm:grid-cols-2 group'}>
-      <PostCouverImage
+      <PostCoverImage
         linkProps={{
           href: postLink,
         }}
@@ -22,7 +22,7 @@ export function PostFeatured() {
         }}
       />
 
-        <PostSummary postHeading='h1' postLink={postLink} createdAt={'00/00/0000 às 00h00'} title={'title post'} excerpt={'sdaad asdasdsa sdadads asdadsa '} />
+        <PostSummary postHeading='h1' postLink={postLink} createdAt={'2023-06-23T15:30:00Z'} title={'title post'} excerpt={'sdaad asdasdsa sdadads asdadsa'} />
 
     </section>
   );

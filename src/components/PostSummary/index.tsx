@@ -1,5 +1,5 @@
-import { formatDatetime, formatRelativeDate } from '@/utils/fotmat-datetime';
-import { PostHeading } from '../PostHeading';
+import { formatDatetime, formatDistanceToNow } from "@/utils/fotmat-datetime";
+import { PostHeading } from "../PostHeading";
 
 type PostSummaryProps = {
   postHeading: 'h1' | 'h2';
@@ -9,7 +9,7 @@ type PostSummaryProps = {
   excerpt: string;
 };
 
-export function PostSummary({
+export async function PostSummary({
   postHeading,
   postLink,
   createdAt,
@@ -21,10 +21,11 @@ export function PostSummary({
       <time
         className='text-slate-600 block text-sm/tight'
         dateTime={createdAt}
-        title={formatDatetime(createdAt)}
+        title={formatDistanceToNow(createdAt)}
       >
-        {formatRelativeDate(createdAt)}
+        {formatDatetime(createdAt)}
       </time>
+
       <PostHeading as={postHeading} url={postLink}>
         {title}
       </PostHeading>
