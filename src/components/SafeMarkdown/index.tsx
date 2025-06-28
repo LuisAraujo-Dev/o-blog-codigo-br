@@ -1,4 +1,6 @@
 import ReactMarkdown from 'react-markdown';
+import rehypeSanitize from 'rehype-sanitize';
+import remarkGfm from 'remark-gfm';
 
 type SafeMarkdownProps = {
   markdown: string;
@@ -7,7 +9,7 @@ type SafeMarkdownProps = {
 export function SafeMarkdown({ markdown }: SafeMarkdownProps) {
   return (
     <div>
-      <ReactMarkdown>{markdown}</ReactMarkdown>
+      <ReactMarkdown rehypePlugins={[rehypeSanitize]} remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
     </div>
   );
 }
