@@ -7,7 +7,7 @@ import { Footer } from '@/components/Footer';
 export const metadata: Metadata = {
   title: {
     default: 'The blog - Este é um blog com Next.js',
-    template: '%s | The Blog'
+    template: '%s | The Blog',
   },
   description: 'Essa seria a descrição dessa página.',
 };
@@ -25,7 +25,7 @@ export default function RootLayout({ children }: Readonly<RootLayoutProps>) {
 
           {children}
 
-          <Footer/>
+          <Footer />
         </Container>
       </body>
     </html>

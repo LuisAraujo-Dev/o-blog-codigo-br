@@ -5,7 +5,7 @@ export function Footer() {
     <footer className='pb-16 text-center'>
       <p>
         <span>Copyright &copy; {new Date().getFullYear()} - </span>
-        <Link href='/'>Luís Araújo</Link>
+        <Link href='/'>The Blog</Link>
       </p>
     </footer>
   );

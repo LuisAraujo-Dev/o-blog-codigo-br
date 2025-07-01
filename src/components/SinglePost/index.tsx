@@ -31,7 +31,7 @@ export async function SinglePost({ slug }: SinglePostProps) {
 
       <p className='text-xl mb-4 text-slate-600'>{post.excerpt}</p>
 
-      <SafeMarkdown markdown={post.content}/>
+      <SafeMarkdown markdown={post.content} />
     </article>
   );
 }

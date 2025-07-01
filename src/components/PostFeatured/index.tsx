@@ -9,7 +9,7 @@ export async function PostFeatured() {
   const postLink = `/post/${post.slug}`;
 
   return (
-    <section className={'grid grid-cols-1 gap-8 mb-16 sm:grid-cols-2 group'}>
+    <section className='grid grid-cols-1 gap-8 mb-16 sm:grid-cols-2 group'>
       <PostCoverImage
         linkProps={{
           href: postLink,
@@ -24,11 +24,11 @@ export async function PostFeatured() {
       />
 
       <PostSummary
-        postHeading='h1'
         postLink={postLink}
+        postHeading='h1'
         createdAt={post.createdAt}
-        title={post.title}
         excerpt={post.excerpt}
+        title={post.title}
       />
     </section>
   );
