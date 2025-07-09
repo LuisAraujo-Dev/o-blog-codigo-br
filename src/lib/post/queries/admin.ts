@@ -5,6 +5,6 @@ export const findPostByIdAdmin = cache(async (id: string) => {
   return await postRepository.findById(id);
 });
 
-export const findPostAdmin = cache(() => {
+export const findAllPostAdmin = cache(() => {
   return postRepository.findAll();
 });
