@@ -1,5 +1,6 @@
 import { findAllPostAdmin } from '@/lib/post/queries/admin';
 import clsx from 'clsx';
+import { Trash2Icon } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function PostsListAdmin() {
@@ -21,7 +22,7 @@ export default async function PostsListAdmin() {
 
             {!post.published && <span className='text-xs text-slate-600 italic'>(Não publicado)</span>}
 
-            <button>Delete</button>
+            <button><Trash2Icon/></button>
           </div>
         );
       })}
