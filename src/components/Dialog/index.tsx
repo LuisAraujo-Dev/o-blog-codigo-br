@@ -3,21 +3,35 @@
 import clsx from 'clsx';
 
 type DialogProps = {
-  isVisible?: boolean,
-  title: string,
-  content: React.ReactNode,
-  onConfirm: () => void,
-  onCancel: () => void,
+  isVisible?: boolean;
+  title: string;
+  content: React.ReactNode;
+  onConfirm: () => void;
+  onCancel: () => void;
+  disabled: boolean;
 };
-export function Dialog({ isVisible = true, title, content, onCancel, onConfirm }: DialogProps) {
+export function Dialog({
+  isVisible = true,
+  title,
+  content,
+  onCancel,
+  onConfirm,
+  disabled,
+}: DialogProps) {
   if (!isVisible) return null;
 
+  function handleCancel() {
+    if(disabled) return;
+
+    onCancel();
+  }
   return (
     <div
       className={clsx(
         'fixed z-50 inset-0 bg-black/50 backdrop-blur-sm',
         'flex justify-center items-center',
       )}
+      onClick={handleCancel}
     >
       <div
         className={clsx(
@@ -29,20 +43,23 @@ export function Dialog({ isVisible = true, title, content, onCancel, onConfirm }
         aria-modal={true}
         aria-labelledby='dialog-title'
         aria-describedby='dialog-description'
+        onClick={ e => e.stopPropagation()}
       >
-        <h3 id='dialog-title' className='text-xl font-extrabold'>{title}</h3>
-        <div id='dialog-description'>
-          {content}
-        </div>
+        <h3 id='dialog-title' className='text-xl font-extrabold'>
+          {title}
+        </h3>
+        <div id='dialog-description'>{content}</div>
         <div className='flex items-center justify-around'>
           <button
             className={clsx(
               'bg-slate-200 hover:bg-slate-300 transition text-slate-950',
               'flex items-center justify-center',
               'py-2 px-4 rounded-lg cursor-pointer',
+              'disabled:bg-slate-200 disabled:text-slate-400 disabled: cursor-not-allowed',
             )}
             autoFocus
-            onClick={onCancel}
+            onClick={handleCancel}
+            disabled={disabled}
           >
             Cancelar
           </button>
@@ -51,8 +68,10 @@ export function Dialog({ isVisible = true, title, content, onCancel, onConfirm }
               'bg-blue-500 hover:bg-blue-600 transition text-blue-50',
               'flex items-center justify-center',
               'py-2 px-4 rounded-lg cursor-pointer',
+              'disabled:bg-slate-200 disabled:text-slate-400 disabled: cursor-not-allowed',
             )}
             onClick={onConfirm}
+            disabled={disabled}
           >
             OK
           </button>
