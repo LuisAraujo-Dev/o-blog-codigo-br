@@ -10,8 +10,9 @@ type DialogProps = {
   onCancel: () => void;
   disabled: boolean;
 };
+
 export function Dialog({
-  isVisible = true,
+  isVisible = false,
   title,
   content,
   onCancel,
@@ -21,15 +22,16 @@ export function Dialog({
   if (!isVisible) return null;
 
   function handleCancel() {
-    if(disabled) return;
+    if (disabled) return;
 
     onCancel();
   }
+
   return (
     <div
       className={clsx(
-        'fixed z-50 inset-0 bg-black/50 backdrop-blur-sm',
-        'flex justify-center items-center',
+        'fixed z-50 inset-0 bg-black/50 backdrop-blur-xs',
+        'flex items-center justify-center',
       )}
       onClick={handleCancel}
     >
@@ -43,7 +45,7 @@ export function Dialog({
         aria-modal={true}
         aria-labelledby='dialog-title'
         aria-describedby='dialog-description'
-        onClick={ e => e.stopPropagation()}
+        onClick={e => e.stopPropagation()}
       >
         <h3 id='dialog-title' className='text-xl font-extrabold'>
           {title}
@@ -55,7 +57,7 @@ export function Dialog({
               'bg-slate-200 hover:bg-slate-300 transition text-slate-950',
               'flex items-center justify-center',
               'py-2 px-4 rounded-lg cursor-pointer',
-              'disabled:bg-slate-200 disabled:text-slate-400 disabled: cursor-not-allowed',
+              'disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed',
             )}
             autoFocus
             onClick={handleCancel}
@@ -63,17 +65,18 @@ export function Dialog({
           >
             Cancelar
           </button>
+
           <button
             className={clsx(
               'bg-blue-500 hover:bg-blue-600 transition text-blue-50',
               'flex items-center justify-center',
               'py-2 px-4 rounded-lg cursor-pointer',
-              'disabled:bg-slate-200 disabled:text-slate-400 disabled: cursor-not-allowed',
+              'disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed',
             )}
             onClick={onConfirm}
             disabled={disabled}
           >
-            OK
+            Ok
           </button>
         </div>
       </div>

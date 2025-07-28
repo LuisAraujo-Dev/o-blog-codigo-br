@@ -8,15 +8,15 @@ export const findAllPublicPostsCached = cache(
     async () => {
       return await postRepository.findAllPublic();
     },
-    ['post'],
+    ['posts'],
     {
-      tags: ['post'],
+      tags: ['posts'],
     },
   ),
 );
 
 export const findPublicPostBySlugCached = cache((slug: string) => {
-  unstable_cache(
+  return unstable_cache(
     async (slug: string) => {
       const post = await postRepository
         .findBySlugPublic(slug)
