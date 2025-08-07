@@ -5,15 +5,18 @@ import { InputCheckbox } from "@/components/InputCheckbox";
 import { InputText } from "@/components/InputText";
 import { MarkdownEditor } from "@/components/MarkdownEditor";
 import { useState } from "react";
+import { ImageUploader } from "../ImageUploader";
 
 
 export function ManegePostForm() {
-  const [contentValue, setContentValue] = useState();  
+  const [contentValue, setContentValue] = useState('');  
 
   return (
     <form action="" className='mb-16'>
           <div className='flex flex-col gap-6'>
             <InputCheckbox labelText='Checkbox' />
+
+            <ImageUploader/>
 
             <MarkdownEditor 
             labelText="Conteudo" 
