@@ -1,9 +1,10 @@
 'use clinte'
 
+import { uploadInageAction } from "@/actions/upload/upload-image-action";
 import { Button } from "@/components/Button";
 import { IMAGE_UPLOADER_MAX_SIZE } from "@/lib/constants";
-import { FileInput, ImageUpIcon } from "lucide-react";
-import { useRef } from "react";
+import { ImageUpIcon } from "lucide-react";
+import { startTransition, useRef } from "react";
 import { toast } from "react-toastify";
 
 export function ImageUploader() {
@@ -16,9 +17,11 @@ export function ImageUploader() {
   };
 
   function handleChange() {
+    toast.dismiss()
     if (!fileInputRef.current) return;
 
-    const file = fileInputRef?.current.files?.[0];
+    const fileInput = fileInputRef.current;
+    const file = fileInput.files?.[0];
 
     if (!file) return;
 
@@ -26,14 +29,26 @@ export function ImageUploader() {
       const readableMaxSize = IMAGE_UPLOADER_MAX_SIZE / 1024;
       toast.error(`Imagem muito grande. Max: ${readableMaxSize}KB.`);
 
-      fileInputRef.current.value = '';
+      fileInput.value = '';
       return;
     }
 
     const formData = new FormData()
     formData.append('file', file)
 
-    fileInputRef.current.value = ''
+    startTransition(async () => {
+      const result = await uploadInageAction(formData);
+
+      if (result.error) {
+        toast.error(result.error);
+        fileInput.value = ''
+        return;
+      }
+
+      toast.success(result.url)
+    })
+
+    fileInputRef.current.value = '';
   }
 
   return (

@@ -4,12 +4,13 @@ import { Button } from "@/components/Button";
 import { InputCheckbox } from "@/components/InputCheckbox";
 import { InputText } from "@/components/InputText";
 import { MarkdownEditor } from "@/components/MarkdownEditor";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { ImageUploader } from "../ImageUploader";
 
 
 export function ManegePostForm() {
   const [contentValue, setContentValue] = useState('');  
+  const [isUploading, startTransition] = useTransition(); 
 
   return (
     <form action="" className='mb-16'>
