@@ -6,9 +6,14 @@ import { MarkdownEditor } from "@/components/MarkdownEditor";
 import { ImageUploader } from "../ImageUploader";
 import { InputCheckbox } from "@/components/InputCheckbox";
 import { useState } from "react";
+import { dto } from "@/dto/dto";
 
-export function ManegePostForm() {
-  const [contentValue, setContentValue] = useState('');
+type ManegePostFormProps = {
+  dto?: dto; 
+}
+
+export function ManegePostForm({dto}: ManegePostFormProps) {
+  const [contentValue, setContentValue] = useState(dto?.content || '');
 
   return (
     <form action="" className='mb-16'>
@@ -18,7 +23,7 @@ export function ManegePostForm() {
           name="id"
           placeholder="ID gerado automaticamente"
           type="text"
-          defaultValue={''}
+          defaultValue={dto?.id || ''}
           readOnly
         />
 
@@ -27,7 +32,7 @@ export function ManegePostForm() {
           name="slug"
           placeholder="Slug gerada automaticamente"
           type="text"
-          defaultValue={''}
+          defaultValue={dto?.slug || ''}
           readOnly
         />
 
@@ -36,7 +41,7 @@ export function ManegePostForm() {
           name="author"
           placeholder="Digite o nome do autor"
           type="text"
-          defaultValue={''}
+          defaultValue={dto?.author || ''}
         />
 
 
@@ -45,7 +50,7 @@ export function ManegePostForm() {
           name="title"
           placeholder="Digite um Título"
           type="text"
-          defaultValue={''}
+          defaultValue={dto?.title || ''}
         />
 
         <InputText
@@ -53,7 +58,7 @@ export function ManegePostForm() {
           name="excerpt"
           placeholder="Digite o resumo"
           type="text"
-          defaultValue={''}
+          defaultValue={dto?.excerpt || ''}
         />
 
         <MarkdownEditor
@@ -71,13 +76,14 @@ export function ManegePostForm() {
           name="coverImageUrl"
           placeholder="Digite a url da imagem"
           type="text"
-          defaultValue={''}
+          defaultValue={dto?.coverImageUrl || ''}
         />
 
         <InputCheckbox
           labelText="Publicar"
           name="published"
           type="checkbox"
+          defaultChecked={dto?.published || false}
         />
 
         <div className='mt-4'>
