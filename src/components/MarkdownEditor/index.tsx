@@ -29,6 +29,7 @@ export function MarkdownEditor({
     <div className='flex flex-col gap-2'>
       {labelText &&
         <label className='text-sm' htmlFor={id}>
+          {labelText}
         </label>}
 
       <MDEditor
@@ -45,7 +46,7 @@ export function MarkdownEditor({
         textareaProps={{
           id,
           name: textAreaName,
-      disabled: disabled
+          disabled: disabled
         }}
       />
     </div>
