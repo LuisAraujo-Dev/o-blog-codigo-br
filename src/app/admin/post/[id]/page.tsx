@@ -1,5 +1,5 @@
 import { ManegePostForm } from "@/components/Admin/ManegePostForm";
-import { makePlublicPost } from "@/dto/dto";
+import { makePlublicPostFromDb } from "@/dto/dto";
 import { findPostByIdAdmin } from "@/lib/post/queries/admin";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -20,16 +20,16 @@ export default async function AdminPostIdPage({
   params,
 }: AdminPostIdPageProps) {
   const { id } = await params;
-  const post = await findPostByIdAdmin(id).catch(); 
+  const post = await findPostByIdAdmin(id).catch();
 
-  if(!post) notFound(); 
+  if (!post) notFound();
 
-  const publicPost = makePlublicPost(post)
+  const publicPost = makePlublicPostFromDb(post)
 
   return (
     <div className='flex flex-col gap-6'>
-          <h1 className='text-xl font-extrabold'>Editar post</h1>
-        <ManegePostForm dto={publicPost}/>
-        </div>
+      <h1 className='text-xl font-extrabold'>Editar post</h1>
+      <ManegePostForm dto={publicPost} />
+    </div>
   );
 }
