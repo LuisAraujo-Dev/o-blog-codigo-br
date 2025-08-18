@@ -1,22 +1,30 @@
-import { Dto } from "@/dto/dto"
+'use server';
 
-export type CreatePostActionState = {
-  formState: Dto,
-  errors: string[],
-}
+import { Dto } from "@/dto/dto";
 
-export async function CreatePostAction(
+
+type CreatePostActionState = {
+  formState: Dto;
+  errors: string[];
+};
+
+export async function createPostAction(
   prevState: CreatePostActionState,
   formData: FormData,
 ): Promise<CreatePostActionState> {
-  // TODO: VERIFICAR SE O USUARIO ESTA LOGADO 
+  // TODO: verificar se o usuário tá logado
 
   if (!(formData instanceof FormData)) {
     return {
-      formState: { ...prevState.formState, title },
-      errors: ['Dados inválidos']
-    }
-
-    const formDataToObj = Object.fromEntries(formData.entries())
+      formState: prevState.formState,
+      errors: ['Dados inválidos'],
+    };
   }
+
+  const formDataToObj = Object.fromEntries(formData.entries());
+
+  return {
+    formState: prevState.formState,
+    errors: [],
+  };
 }
