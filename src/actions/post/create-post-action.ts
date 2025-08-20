@@ -4,6 +4,7 @@ import { Dto, makePartialPublicPost } from "@/dto/dto";
 import { PostCreateSchema } from "@/lib/post/validations";
 import { PostModel } from "@/models/post/post-model";
 import { getZodErrorMessages } from "@/utils/get-zod-error-messages";
+import { v4 as uuidV4 } from 'uuid'
 
 
 type CreatePostActionState = {
@@ -40,9 +41,10 @@ export async function CreatePostAction(
     ...validPostData, 
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
+    id: uuidV4(), 
   }
   return {
-    formState: prevState.formState,
+    formState: newPost,
     errors: [],
   };
 }
