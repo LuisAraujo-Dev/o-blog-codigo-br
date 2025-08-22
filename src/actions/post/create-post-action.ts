@@ -1,10 +1,9 @@
 'use server';
 
-import { drizzleDb } from '@/db/drizzle';
-import { postsTable } from '@/db/drizzle/schemas';
 import { Dto, makePartialPublicPost } from '@/dto/dto';
 import { PostCreateSchema } from '@/lib/post/validations';
 import { PostModel } from '@/models/post/post-model';
+import { postRepository } from '@/repositories/post';
 import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
 import { makeSlugFromText } from '@/utils/make-slug-from-texto';
 import { revalidateTag } from 'next/cache';
@@ -50,7 +49,21 @@ if (!(formData instanceof FormData)) {
   };
 
   // TODO: mover este método para o repositório
-  await drizzleDb.insert(postsTable).values(newPost);
+
+  try {
+    await postRepository.creaate(newPost)
+  } catch(e: unknown) {
+    if (e instanceof Error) {
+      return {
+        formState: newPost, 
+        errors: [e.message], 
+      }
+    }
+
+    return {
+      formState: newPost, errors: ['Erro desconhecido'],
+    }
+  }
 
   revalidateTag('posts');
   redirect(`/admin/post/${newPost.id}`);
