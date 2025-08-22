@@ -8,7 +8,7 @@ import { InputCheckbox } from "@/components/InputCheckbox";
 import { useActionState, useEffect, useState } from "react";
 import { Dto, makePartialPublicPost } from "@/dto/dto";
 import { toast } from "react-toastify";
-import { CreatePostAction } from "@/actions/post/create-post-action";
+import { createPostAction } from "@/actions/post/create-post-action";
 
 type ManegePostFormProps = {
   dto?: Dto,
@@ -20,7 +20,7 @@ export function ManegePostForm({ dto }: ManegePostFormProps) {
     errors: [],
   }
   const [state, action, isPending] = useActionState(
-    CreatePostAction,
+    createPostAction,
     initialState,
   )
 

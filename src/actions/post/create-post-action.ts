@@ -1,25 +1,28 @@
 'use server';
 
-import { Dto, makePartialPublicPost } from "@/dto/dto";
-import { PostCreateSchema } from "@/lib/post/validations";
-import { PostModel } from "@/models/post/post-model";
-import { getZodErrorMessages } from "@/utils/get-zod-error-messages";
-import { makeSlugFromText } from "@/utils/make-slug-from-texto";
-import { v4 as uuidV4 } from 'uuid'
-
+import { drizzleDb } from '@/db/drizzle';
+import { postsTable } from '@/db/drizzle/schemas';
+import { Dto, makePartialPublicPost } from '@/dto/dto';
+import { PostCreateSchema } from '@/lib/post/validations';
+import { PostModel } from '@/models/post/post-model';
+import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
+import { makeSlugFromText } from '@/utils/make-slug-from-texto';
+import { revalidateTag } from 'next/cache';
+import { redirect } from 'next/navigation';
+import { v4 as uuidV4 } from 'uuid';
 
 type CreatePostActionState = {
   formState: Dto;
   errors: string[];
 };
 
-export async function CreatePostAction(
+export async function createPostAction(
   prevState: CreatePostActionState,
   formData: FormData,
 ): Promise<CreatePostActionState> {
   // TODO: verificar se o usuário tá logado
 
-  if (!(formData instanceof FormData)) {
+if (!(formData instanceof FormData)) {
     return {
       formState: prevState.formState,
       errors: ['Dados inválidos'],
@@ -27,26 +30,28 @@ export async function CreatePostAction(
   }
 
   const formDataToObj = Object.fromEntries(formData.entries());
-  const zodParsedObj = PostCreateSchema.safeParse(formDataToObj)
+  const zodParsedObj = PostCreateSchema.safeParse(formDataToObj);
 
   if (!zodParsedObj.success) {
     const errors = getZodErrorMessages(zodParsedObj.error.format());
     return {
-      errors, 
-      formState: makePartialPublicPost(formDataToObj), 
-    }
+      errors,
+      formState: makePartialPublicPost(formDataToObj),
+    };
   }
 
-  const validPostData = zodParsedObj.data; 
+ const validPostData = zodParsedObj.data;
   const newPost: PostModel = {
-    ...validPostData, 
+    ...validPostData,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
     id: uuidV4(),
-    slug: makeSlugFromText(validPostData.title),   
-  }
-  return {
-    formState: newPost,
-    errors: [],
+    slug: makeSlugFromText(validPostData.title),
   };
+
+  // TODO: mover este método para o repositório
+  await drizzleDb.insert(postsTable).values(newPost);
+
+  revalidateTag('posts');
+  redirect(`/admin/post/${newPost.id}`);
 }
