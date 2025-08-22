@@ -51,7 +51,7 @@ if (!(formData instanceof FormData)) {
   // TODO: mover este método para o repositório
 
   try {
-    await postRepository.creaate(newPost)
+    await postRepository.create(newPost)
   } catch(e: unknown) {
     if (e instanceof Error) {
       return {
