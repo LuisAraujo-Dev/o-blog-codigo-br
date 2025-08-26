@@ -114,7 +114,7 @@ export class DrizzlePostRepository implements PostRepository {
       .where(eq(postsTable.id, id));
     return { ...oldPost, ...postData, };
   }
-
+}
 // (async () => {
 //   //   como-a-tecnologia-impacta-nosso-bem-estar false
 //   // os-desafios-do-trabalho-remoto-moderno true

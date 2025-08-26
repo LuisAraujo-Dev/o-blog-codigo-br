@@ -1,25 +1,21 @@
 'use server';
 
-import { Dto, makePartialPublicPost } from '@/dto/dto';
-import { PostCreateSchema } from '@/lib/post/validations';
-import { PostModel } from '@/models/post/post-model';
+import { Dto, makePartialPublicPost, makePlublicPostFromDb } from '@/dto/dto';
+import { PostUpdateSchema } from '@/lib/post/validations';
 import { postRepository } from '@/repositories/post';
 import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
-import { makeSlugFromText } from '@/utils/make-slug-from-texto';
 import { revalidateTag } from 'next/cache';
-import { redirect } from 'next/navigation';
-import { v4 as uuidV4 } from 'uuid';
 
-type CreatePostActionState = {
+type UpdatePostActionState = {
   formState: Dto,
   errors: string[],
   success?: true, 
 };
 
 export async function createPostAction(
-  prevState: CreatePostActionState,
+  prevState: UpdatePostActionState,
   formData: FormData,
-): Promise<CreatePostActionState> {
+): Promise<UpdatePostActionState> {
   // TODO: verificar se o usuário tá logado
 
 if (!(formData instanceof FormData)) {
@@ -29,8 +25,17 @@ if (!(formData instanceof FormData)) {
     };
   }
 
+  const id = formData.get('id')?.toString() || ''; 
+  
+  if (!id || typeof id !== 'string') {
+    return {
+      formState: prevState.formState,
+      errors: ['ID inválidos'],
+    };
+  }
+
   const formDataToObj = Object.fromEntries(formData.entries());
-  const zodParsedObj = PostCreateSchema.safeParse(formDataToObj);
+  const zodParsedObj = PostUpdateSchema.safeParse(formDataToObj);
 
   if (!zodParsedObj.success) {
     const errors = getZodErrorMessages(zodParsedObj.error.format());
@@ -41,31 +46,33 @@ if (!(formData instanceof FormData)) {
   }
 
  const validPostData = zodParsedObj.data;
-  const newPost: PostModel = {
+  const newPost = {
     ...validPostData,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-    id: uuidV4(),
-    slug: makeSlugFromText(validPostData.title),
   };
 
-  // TODO: mover este método para o repositório
-
+  let post; 
   try {
-    await postRepository.create(newPost)
+    post = await postRepository.update(id, newPost)
   } catch(e: unknown) {
     if (e instanceof Error) {
       return {
-        formState: newPost, 
+        formState: makePartialPublicPost(formDataToObj),
         errors: [e.message], 
       }
     }
 
     return {
-      formState: newPost, errors: ['Erro desconhecido'],
+      formState: makePartialPublicPost(formDataToObj), 
+      errors: ['Erro desconhecido'],
     }
   }
 
   revalidateTag('posts');
-  redirect(`/admin/post/${newPost.id}`);
+  revalidateTag(`post-${post.slug}`);
+
+  return {
+    formState: makePlublicPostFromDb(post), 
+    errors: [], 
+    success: true, 
+  }
 }
