@@ -24,12 +24,12 @@ export default async function AdminPostIdPage({
 
   if (!post) notFound();
 
-  const publicPost = makePlublicPostFromDb(post)
+  const dto = makePlublicPostFromDb(post)
 
   return (
     <div className='flex flex-col gap-6'>
       <h1 className='text-xl font-extrabold'>Editar post</h1>
-      <ManegePostForm dto={publicPost} />
+      <ManegePostForm mode='update' dto={dto} />
     </div>
   );
 }

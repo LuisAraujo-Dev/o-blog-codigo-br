@@ -12,7 +12,7 @@ type UpdatePostActionState = {
   success?: true, 
 };
 
-export async function createPostAction(
+export async function updatePostAction(
   prevState: UpdatePostActionState,
   formData: FormData,
 ): Promise<UpdatePostActionState> {
