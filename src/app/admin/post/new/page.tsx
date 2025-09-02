@@ -1,4 +1,4 @@
-import { ManegePostForm } from '@/components/Admin/ManegePostForm';
+import { ManagePostForm } from '@/components/Admin/ManagePostForm';
 import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
@@ -12,7 +12,7 @@ export default async function AdminPostNewPage() {
   return (
     <div className='flex flex-col gap-6'>
       <h1 className='text-xl font-extrabold'>Cria post</h1>
-      <ManegePostForm mode='create'/>
+      <ManagePostForm mode='create' />
     </div>
   );
 }

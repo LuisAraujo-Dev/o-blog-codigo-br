@@ -1,19 +1,20 @@
 'use server';
 
-import { Dto, makePartialPublicPost } from '@/dto/dto';
+import { Dto, makePartialDto } from '@/dto/post/dto';
 import { PostCreateSchema } from '@/lib/post/validations';
 import { PostModel } from '@/models/post/post-model';
 import { postRepository } from '@/repositories/post';
+
 import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
-import { makeSlugFromText } from '@/utils/make-slug-from-texto';
+import { makeSlugFromText } from '@/utils/make-slug-from-text';
 import { revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { v4 as uuidV4 } from 'uuid';
 
 type CreatePostActionState = {
-  formState: Dto,
-  errors: string[],
-  success?: string, 
+  formState: Dto;
+  errors: string[];
+  success?: string;
 };
 
 export async function createPostAction(
@@ -22,7 +23,9 @@ export async function createPostAction(
 ): Promise<CreatePostActionState> {
   // TODO: verificar se o usuário tá logado
 
-if (!(formData instanceof FormData)) {
+
+
+  if (!(formData instanceof FormData)) {
     return {
       formState: prevState.formState,
       errors: ['Dados inválidos'],
@@ -36,11 +39,11 @@ if (!(formData instanceof FormData)) {
     const errors = getZodErrorMessages(zodParsedObj.error.format());
     return {
       errors,
-      formState: makePartialPublicPost(formDataToObj),
+      formState: makePartialDto(formDataToObj),
     };
   }
 
- const validPostData = zodParsedObj.data;
+  const validPostData = zodParsedObj.data;
   const newPost: PostModel = {
     ...validPostData,
     createdAt: new Date().toISOString(),
@@ -49,21 +52,20 @@ if (!(formData instanceof FormData)) {
     slug: makeSlugFromText(validPostData.title),
   };
 
-  // TODO: mover este método para o repositório
-
   try {
-    await postRepository.create(newPost)
-  } catch(e: unknown) {
+    await postRepository.create(newPost);
+  } catch (e: unknown) {
     if (e instanceof Error) {
       return {
-        formState: newPost, 
-        errors: [e.message], 
-      }
+        formState: newPost,
+        errors: [e.message],
+      };
     }
 
     return {
-      formState: newPost, errors: ['Erro desconhecido'],
-    }
+      formState: newPost,
+      errors: ['Erro desconhecido'],
+    };
   }
 
   revalidateTag('posts');

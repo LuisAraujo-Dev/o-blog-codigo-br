@@ -1,14 +1,14 @@
-import { ManegePostForm } from "@/components/Admin/ManegePostForm";
-import { makePlublicPostFromDb } from "@/dto/dto";
-import { findPostByIdAdmin } from "@/lib/post/queries/admin";
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { ManagePostForm } from '@/components/Admin/ManagePostForm';
+import { makeDtoFromDb } from '@/dto/post/dto';
+import { findPostByIdAdmin } from '@/lib/post/queries/admin';
+import { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Editar post'
-}
+  title: 'Editar post',
+};
 
 type AdminPostIdPageProps = {
   params: Promise<{
@@ -20,16 +20,17 @@ export default async function AdminPostIdPage({
   params,
 }: AdminPostIdPageProps) {
   const { id } = await params;
-  const post = await findPostByIdAdmin(id).catch();
+  const post = await findPostByIdAdmin(id).catch(() => undefined);
 
   if (!post) notFound();
 
-  const dto = makePlublicPostFromDb(post)
+  const publicPost = makeDtoFromDb(post);
 
   return (
     <div className='flex flex-col gap-6'>
       <h1 className='text-xl font-extrabold'>Editar post</h1>
-      <ManegePostForm mode='update' dto={dto} />
+      <ManagePostForm mode='update' dto={publicPost} />
     </div>
   );
 }
+

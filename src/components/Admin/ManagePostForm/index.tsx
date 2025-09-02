@@ -6,43 +6,43 @@ import { MarkdownEditor } from "@/components/MarkdownEditor";
 import { ImageUploader } from "../ImageUploader";
 import { InputCheckbox } from "@/components/InputCheckbox";
 import { useActionState, useEffect, useState } from "react";
-import { Dto, makePartialPublicPost } from "@/dto/dto";
+import { Dto, makePartialDto } from "@/dto/post/dto";
 import { toast } from "react-toastify";
 import { createPostAction } from "@/actions/post/create-post-action";
 import { updatePostAction } from "@/actions/post/update-post-action";
 import { useRouter, useSearchParams } from "next/navigation";
 
-type ManegePostFormUpdateProps = {
+type ManagePostFormUpdateProps = {
   mode: 'update',
   dto: Dto,
 }
 
-type ManegePostFormCreateProps = {
+type ManagePostFormCreateProps = {
   mode: 'create',
 }
 
-type ManegePostFormProps = 
-  | ManegePostFormUpdateProps 
-  | ManegePostFormCreateProps
+type ManagePostFormProps =
+  | ManagePostFormUpdateProps
+  | ManagePostFormCreateProps
 
-export function ManegePostForm(props : ManegePostFormProps) {
-  const {mode} = props; 
-  const searchPatams = useSearchParams(); 
-  const created = searchPatams.get('created'); 
+export function ManagePostForm(props: ManagePostFormProps) {
+  const { mode } = props;
+  const searchPatams = useSearchParams();
+  const created = searchPatams.get('created');
   const router = useRouter()
 
-  let dto;  
-  if(mode === 'update') {
+  let dto;
+  if (mode === 'update') {
     dto = props.dto
   }
 
   const actionsMap = {
     update: updatePostAction,
-    create: createPostAction,  
+    create: createPostAction,
   }
 
   const initialState = {
-    formState: makePartialPublicPost(dto),
+    formState: makePartialDto(dto),
     errors: [],
   }
   const [state, action, isPending] = useActionState(
@@ -66,9 +66,9 @@ export function ManegePostForm(props : ManegePostFormProps) {
 
   useEffect(() => {
     if (created === '1') {
-      toast.dismiss(); 
-      toast.success('Post criado com sucesso!'); 
-      const url = new URL(window.location.href); 
+      toast.dismiss();
+      toast.success('Post criado com sucesso!');
+      const url = new URL(window.location.href);
       url.searchParams.delete('created')
       router.replace(url.toString())
     }
@@ -135,7 +135,7 @@ export function ManegePostForm(props : ManegePostFormProps) {
           disabled={isPending}
         />
 
-        <ImageUploader disabled={isPending}/>
+        <ImageUploader disabled={isPending} />
 
         <InputText
           labelText="URL da imagem de capa"
@@ -156,7 +156,7 @@ export function ManegePostForm(props : ManegePostFormProps) {
 
         <div className='mt-4'>
           <Button type='submit' size='md'
-          disabled={isPending}>Enviar</Button>
+            disabled={isPending}>Enviar</Button>
         </div>
       </div>
     </form>
