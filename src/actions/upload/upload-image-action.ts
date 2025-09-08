@@ -1,10 +1,5 @@
 'use server';
 
-import {
-  IMAGE_SERVER_URL,
-  IMAGE_UPLOAD_DIRECTORY,
-  IMAGE_UPLOAD_MAX_SIZE,
-} from '@/lib/constants';
 import { mkdir, writeFile } from 'fs/promises';
 import { extname, resolve } from 'path';
 
@@ -19,6 +14,7 @@ export async function uploadImageAction(
   // TODO: Verificar se o usuário está logado
 
   const makeResult = ({ url = '', error = '' }) => ({ url, error });
+  const imageUploadMaxSize = Number(process.env.NEXT_PUBLIC_IMAGE_UPLOAD_MAX_SIZE) || 921600;
 
   if (!(formData instanceof FormData)) {
     return makeResult({ error: 'Dados inválidos' });
@@ -30,7 +26,7 @@ export async function uploadImageAction(
     return makeResult({ error: 'Arquivo inválido' });
   }
 
-  if (file.size > IMAGE_UPLOAD_MAX_SIZE) {
+  if (file.size > imageUploadMaxSize) {
     return makeResult({ error: 'Arquivo muito grande' });
   }
 
@@ -41,10 +37,12 @@ export async function uploadImageAction(
   const imageExtension = extname(file.name);
   const uniqueImageName = `${Date.now()}${imageExtension}`;
 
+  const uploadDir = process.env.IMAGE_UPLOAD_DIRECTORY || 'uploads'
+
   const uploadFullPath = resolve(
     process.cwd(),
     'public',
-    IMAGE_UPLOAD_DIRECTORY,
+    uploadDir,
   );
   await mkdir(uploadFullPath, { recursive: true });
 
@@ -55,7 +53,8 @@ export async function uploadImageAction(
 
   await writeFile(fileFullPath, buffer);
 
-  const url = `${IMAGE_SERVER_URL}/${uniqueImageName}`;
+  const imageServerUrl = process.env.IMAGE_SERVER_URL || 'http://localhost:3000/uploads'
+  const url = `${imageServerUrl}/${uniqueImageName}`;
 
   return makeResult({ url });
 }

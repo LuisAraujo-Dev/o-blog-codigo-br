@@ -2,7 +2,6 @@
 
 import { uploadImageAction } from '@/actions/upload/upload-image-action';
 import { Button } from '@/components/Button';
-import { IMAGE_UPLOAD_MAX_SIZE } from '@/lib/constants';
 import { ImageUpIcon } from 'lucide-react';
 import { useRef, useState, useTransition } from 'react';
 import { toast } from 'react-toastify';
@@ -15,6 +14,8 @@ export function ImageUploader({disabled = false} : ImageUploaderProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploading, startTransition] = useTransition();
   const [imgUrl, setImgUrl] = useState('');
+    const imageUploadMaxSize = Number(process.env.NEXT_PUBLIC_IMAGE_UPLOAD_MAX_SIZE) || 921600;
+
 
   function handleChooseFile() {
     if (!fileInputRef.current) return;
@@ -38,8 +39,8 @@ export function ImageUploader({disabled = false} : ImageUploaderProps) {
       return;
     }
 
-    if (file.size > IMAGE_UPLOAD_MAX_SIZE) {
-      const readableMaxSize = IMAGE_UPLOAD_MAX_SIZE / 1024;
+    if (file.size > imageUploadMaxSize) {
+      const readableMaxSize = (imageUploadMaxSize / 1024).toFixed(2);
       toast.error(`Imagem muito grande. Máx.: ${readableMaxSize}KB.`);
 
       fileInput.value = '';
