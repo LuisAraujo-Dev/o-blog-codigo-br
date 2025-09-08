@@ -1,11 +1,16 @@
+import { loginAction } from "@/actions/login/login-action";
 import { Button } from "@/components/Button";
 import { InputText } from "@/components/InputText";
 import clsx from "clsx";
 import { LogInIcon } from "lucide-react";
+import { useActionState } from "react";
 
 export const dynamic = 'force-dynamic';
 
 export default async function AdminLoginPage() {
+  const [state, action, isPending] = useActionState(loginAction, undefined)
+
+
   return (
     <div className={clsx(
       'flex items-center justify-center', 
@@ -17,17 +22,17 @@ export default async function AdminLoginPage() {
         name="username"
         labelText="Usuário"
         placeholder="Seu usuário"
-        disabled={false}
+        disabled={isPending}
         />
         <InputText 
         type="password"
         name="password"
         labelText="Senha"
         placeholder="Sua senha"
-        disabled={false}
+        disabled={isPending}
         />
 
-      <Button disabled={false} type='submit' className="mt-4">
+      <Button disabled={isPending} type='submit' className="mt-4">
         <LogInIcon />
         Entrar
       </Button>

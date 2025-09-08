@@ -2,6 +2,6 @@
 
 import { asyncDelay } from "@/utils/async-delay"
 
-export async function loginaction() {
+export async function loginAction() {
   await asyncDelay(3000); 
 }
