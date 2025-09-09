@@ -1,8 +1,10 @@
 'use server'
 
+import { verifyPassword } from "@/lib/login/manafe-login";
 import { asyncDelay } from "@/utils/async-delay"
 import { error } from "console";
 import { toast } from "react-toastify";
+import { base64 } from "zod";
 
 type LoginActionState = {
   username: string, 
@@ -19,14 +21,25 @@ export async function loginAction(state: LoginActionState, formData: FormData) {
   }
   } 
 
-  const username = formData.get('username')?.toString || ''; 
-  const password = formData.get('password')?.toString || ''; 
+  const username = formData.get('username')?.toString.trim() || ''; 
+  const password = formData.get('password')?.toString.trim() || ''; 
+
+  if (!username || !password) {
+    return {
+      username, 
+      error: 'Digite usuário e a senha'
+    }
+  }
 
   const isUsernameValid = username === process.env.LOGIN_USER; 
+  const isPasswordValid = await verifyPassword(password, process.env.LOGIN_PASS || '')
 
-}
-
-  return {
-    username: '', 
-    error: ''
+  if (!isUsernameValid && !isPasswordValid) {
+    return {
+      username, 
+      error: 'Dados inválidos',
+    }
   }
+
+  
+}
