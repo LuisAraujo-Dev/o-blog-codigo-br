@@ -2,9 +2,6 @@
 
 import { verifyPassword } from "@/lib/login/manafe-login";
 import { asyncDelay } from "@/utils/async-delay"
-import { error } from "console";
-import { toast } from "react-toastify";
-import { base64 } from "zod";
 
 type LoginActionState = {
   username: string, 
@@ -21,8 +18,8 @@ export async function loginAction(state: LoginActionState, formData: FormData) {
   }
   } 
 
-  const username = formData.get('username')?.toString.trim() || ''; 
-  const password = formData.get('password')?.toString.trim() || ''; 
+  const username = formData.get('username')?.toString().trim() || ''; 
+  const password = formData.get('password')?.toString().trim() || ''; 
 
   if (!username || !password) {
     return {
