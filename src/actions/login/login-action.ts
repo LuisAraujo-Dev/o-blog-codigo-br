@@ -37,6 +37,4 @@ export async function loginAction(state: LoginActionState, formData: FormData) {
       error: 'Dados inválidos',
     }
   }
-
-  
 }

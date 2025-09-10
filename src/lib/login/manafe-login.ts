@@ -1,5 +1,9 @@
 import bcrypt from "bcryptjs";
 
+const jwtSecretKey = process.env.JWT_SECRET_KEY; 
+const jwtEncodeKey = new TextEncoder().encode(jwtSecretKey)
+
+
 export async function hashPassword(password: string) {
   const hash = await bcrypt.hash(password, 10);
   const base64 = Buffer.from(hash).toString('base64')
