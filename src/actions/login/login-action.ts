@@ -1,7 +1,8 @@
 'use server'
 
-import { verifyPassword } from "@/lib/login/manafe-login";
+import { createLoginSession, verifyPassword } from "@/lib/login/manafe-login";
 import { asyncDelay } from "@/utils/async-delay"
+import { redirect } from "next/navigation";
 
 type LoginActionState = {
   username: string, 
@@ -37,4 +38,7 @@ export async function loginAction(state: LoginActionState, formData: FormData) {
       error: 'Dados inválidos',
     }
   }
+
+  await createLoginSession(username);
+  redirect('/admin/post'); 
 }
