@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
-import { SignJWT,  } from "jose"
+import { SignJWT, jwtVerify} from "jose"
 
 const jwtSecretKey = process.env.JWT_SECRET_KEY; 
 const jwtEncodeKey = new TextEncoder().encode(jwtSecretKey)
@@ -49,4 +49,16 @@ export async function signJwt(jwtPayload: JwtPayload) {
   return new SignJWT(jwtPayload)
   .setProtectedHeader({alg: 'HS256', TYP: 'JWT'})
   .setIssuedAt().setExpirationTime(loginExpStr).sign(jwtEncodeKey)
+}
+
+export async function verifyJWT(jwt: string | undefined = '') {
+  try {
+    const { payload } = await jwtVerify(jwt, jwtEncodeKey, {
+      algorithms: ['HS256'],
+    });
+    return payload; 
+  } catch {
+    console.log('Invalid Token'); 
+    return false; 
+  } 
 }
