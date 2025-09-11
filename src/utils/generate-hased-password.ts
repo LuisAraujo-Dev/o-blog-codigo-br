@@ -1,7 +1,7 @@
-import { hashPassword } from "@/lib/login/manafe-login";
+import { hashPassword } from "@/lib/login/manage-login";
 
 (async () => {
-  const myPassword = ''; 
-  const hashPasswordInBase64 = await hashPassword(myPassword); 
-   console.log({hashPasswordInBase64}); 
+  const myPassword = '';
+  const hashPasswordInBase64 = await hashPassword(myPassword);
+  console.log({ hashPasswordInBase64 });
 })(); 
