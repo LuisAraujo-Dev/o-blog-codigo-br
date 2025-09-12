@@ -55,6 +55,14 @@ export async function getLoginSession() {
   return verifyJWT(jwt); 
 }
 
+export async function verifyLoginSession() {
+  const jwtPayload = await getLoginSession();
+
+  if(!jwtPayload) return false; 
+
+  return jwtPayload?.username === process.env.LOGIN_USER; 
+}
+
 export async function signJwt(jwtPayload: JwtPayload) {
   return new SignJWT(jwtPayload)
   .setProtectedHeader({alg: 'HS256', TYP: 'JWT'})
