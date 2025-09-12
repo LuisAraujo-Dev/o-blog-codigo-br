@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { SignJWT, jwtVerify} from "jose"
+import { redirect } from "next/navigation";
 
 const jwtSecretKey = process.env.JWT_SECRET_KEY; 
 const jwtEncodeKey = new TextEncoder().encode(jwtSecretKey)
@@ -61,6 +62,14 @@ export async function verifyLoginSession() {
   if(!jwtPayload) return false; 
 
   return jwtPayload?.username === process.env.LOGIN_USER; 
+}
+
+export async function requireLoginSessionOrRedirect() {
+  const isAuthententicated = await getLoginSession(); 
+
+  if (!isAuthententicated) {
+    redirect('admin/login')
+  }
 }
 
 export async function signJwt(jwtPayload: JwtPayload) {
