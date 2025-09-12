@@ -65,7 +65,7 @@ export async function verifyLoginSession() {
 }
 
 export async function requireLoginSessionOrRedirect() {
-  const isAuthententicated = await getLoginSession(); 
+  const isAuthententicated = await verifyLoginSession(); 
 
   if (!isAuthententicated) {
     redirect('admin/login')
