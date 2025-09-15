@@ -1,7 +1,6 @@
 'use server';
 
 import { verifyLoginSession } from '@/lib/login/manage-login';
-import { error } from 'console';
 import { mkdir, writeFile } from 'fs/promises';
 import { extname, resolve } from 'path';
 
