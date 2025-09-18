@@ -53,7 +53,7 @@ export async function getLoginSession() {
 
   if(!jwt) return false; 
 
-  return verifyJWT(jwt); 
+  return verifyJwt(jwt); 
 }
 
 export async function verifyLoginSession() {
@@ -78,7 +78,7 @@ export async function signJwt(jwtPayload: JwtPayload) {
   .setIssuedAt().setExpirationTime(loginExpStr).sign(jwtEncodeKey)
 }
 
-export async function verifyJWT(jwt: string | undefined = '') {
+export async function verifyJwt(jwt: string | undefined = '') {
   try {
     const { payload } = await jwtVerify(jwt, jwtEncodeKey, {
       algorithms: ['HS256'],
