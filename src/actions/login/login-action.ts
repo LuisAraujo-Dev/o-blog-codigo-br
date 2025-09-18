@@ -1,31 +1,32 @@
-'use server'
+'use server';
 
-import { createLoginSession, verifyPassword } from "@/lib/login/manage-login";
-import { asyncDelay } from "@/utils/async-delay"
-import { redirect } from "next/navigation";
+import { createLoginSession } from '@/lib/login/manage-login';
+import { verifyPassword } from '@/lib/login/manage-login';
+import { asyncDelay } from '@/utils/async-delay';
+import { redirect } from 'next/navigation';
 
 type LoginActionState = {
-  username: string,
-  error: string,
-}
+  username: string;
+  error: string;
+};
 
 export async function loginAction(state: LoginActionState, formData: FormData) {
-  const allowLogin = Boolean(Number(process.env.ALLOW_LOGIN)); 
+  const allowLogin = Boolean(Number(process.env.ALLOW_LOGIN));
 
-  if(!allowLogin) {
+  if (!allowLogin) {
     return {
-      username: '', 
-      errors: 'Login not allowed'
-    }
+      username: '',
+      error: 'Login not allowed',
+    };
   }
-  
-  await asyncDelay(3000);
+
+  await asyncDelay(4000);
 
   if (!(formData instanceof FormData)) {
     return {
       username: '',
-      error: 'Dados inválidos'
-    }
+      error: 'Dados inválidos',
+    };
   }
 
   const username = formData.get('username')?.toString().trim() || '';
@@ -34,18 +35,21 @@ export async function loginAction(state: LoginActionState, formData: FormData) {
   if (!username || !password) {
     return {
       username,
-      error: 'Digite usuário e a senha'
-    }
+      error: 'Digite o usuário e a senha',
+    };
   }
 
   const isUsernameValid = username === process.env.LOGIN_USER;
-  const isPasswordValid = await verifyPassword(password, process.env.LOGIN_PASS || '')
+  const isPasswordValid = await verifyPassword(
+    password,
+    process.env.LOGIN_PASS || '',
+  );
 
-  if (!isUsernameValid && !isPasswordValid) {
+  if (!isUsernameValid || !isPasswordValid) {
     return {
       username,
-      error: 'Dados inválidos',
-    }
+      error: 'Usuário ou senha inválidos',
+    };
   }
 
   await createLoginSession(username);

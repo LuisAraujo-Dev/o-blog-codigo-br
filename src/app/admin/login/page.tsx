@@ -1,21 +1,24 @@
-import { LoginForm } from "@/components/Admin/LoginForm";
-import ErrorMessage from "@/components/ErrorMessage";
-import { Metadata } from "next";
+import { LoginForm } from '@/components/Admin/LoginForm';
+import ErrorMessage from '@/components/ErrorMessage';
+import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Login'
-} 
+  title: 'Login',
+};
 
 export default async function AdminLoginPage() {
-  const allowLogin = Boolean(Number(process.env.ALLOW_LOGIN))
+  const allowLogin = Boolean(Number(process.env.ALLOW_LOGIN));
 
-  if(!allowLogin) {
+  if (!allowLogin) {
     return (
-      <ErrorMessage 
-      contentTitle={"403"} content={"Libere o sistema de login usando o ALLOW_LOGIN"} />
-    )
+      <ErrorMessage
+        contentTitle='403'
+        content='Libere o sistema de login usando ALLOW_LOGIN'
+      />
+    );
   }
-  return <LoginForm/>
+
+  return <LoginForm />;
 }
